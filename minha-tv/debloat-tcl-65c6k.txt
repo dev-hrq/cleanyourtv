@@ -1,0 +1,60 @@
+# TCL 65C6K Google TV, Brazil (device G15, model "Smart TV Pro", Realtek)
+# Android 14 (Google TV), firmware UTT2.250416.001 AU12. Applied and verified on 2026-10-25, reboot included.
+# Starting point: examples/tcl-65c7k-google-tv (same firmware, G08/MediaTek board).
+# Everything is DISABLED, not uninstalled.
+#
+# Keep: com.tcl.tv, com.tcl.tvinput, com.tcl.suspension (Input panel), com.mirakulo.astrotv.service (Ginga),
+# com.google.android.inputmethod.latin, com.google.android.tv.remote.service, googletvremotepairer,
+# com.tcl.autopair (remote pairing), com.dolby.*, com.realtek.*, com.tcl.systemserver, com.tcl.initsetup,
+# com.tcl.dashboard, com.tcl.globalkeyoverlay, com.tcl.systemui.plugin, com.tcl.providers.config.
+# Never touch: com.tcl.factory.view.
+
+# Kept by owner's choice: com.tcl.ttvs (it hosts the T-Cast server; Samba TV ACR lives there too),
+# com.tcl.magiconnectfree (T-Cast), katniss (Assistant), mediashell (Chromecast), com.tcl.miracast,
+# com.tcl.airplay2 + com.realtek.airplay2 (AirPlay), and the optional extras: gamebar, UpdatePeripheral,
+# t_solo, hearaid, ui_mediaCenter, dreamx, play.games, talkback.
+# A Fire TV Stick is used on HDMI, powered from the TV's USB port: nothing here touches HDMI or USB.
+
+# TCL / Google tracking and analytics
+com.tcl.logkit                         # log capture and upload
+com.tcl.usercenter                     # TCL account sign-in nags
+com.google.android.feedback
+com.android.tv.feedbackconsent
+
+# TCL content, ads and promos
+# com.tcl.channelplus                  # TCL Channel's live channels (TV input); re-enabled 2026-10-25, owner uses TCL Channel
+com.tcl.tv.tclhome_passive             # pushes TCL content to the home screen at boot
+com.tcl.partnercustomizer              # TCL tweaks to Google TV home rows
+com.tcl.interactive                    # TCL TIAS background service
+com.tcl.messagebox                     # push messages and promos
+# com.tcl.waterfall.overseas           # the TCL Channel app itself: its remote button (4020) opens it; re-enabled 2026-10-25
+com.tcl.useragreement                  # user-agreement popups
+
+# Retail demo / hotel mode
+com.tcl.exhibit
+com.tcl.esticker
+com.tcl.hotelmenu
+
+# Silent installers and partner attribution
+android.autoinstalls.config.google.gtvpai
+com.google.android.partnersetup
+com.tcl.smartlink.core                 # bundles a silent app installer (CustomInstallService)
+
+# Preloaded TCL extras
+com.tcl.ocean.instructions             # e-manual
+com.tcl.repairguide
+com.tcl.guard                          # "cleaner" / app manager
+
+# Streaming apps the owner does not use
+com.netflix.ninja                      # Netflix
+# com.netflix.tokenmanager             # Netflix sign-in helper; kept on so Netflix works when re-enabled from the Play Store
+com.google.android.youtube.tvmusic     # YouTube Music
+com.disney.disneyplus                  # Disney+
+com.wbd.stream                         # Max
+com.cbs.ca                             # Paramount+
+com.viki.android                       # Viki
+br.com.claro.now.smarttvclient         # Claro TV+
+
+# Needed for the custom launcher. Disable only AFTER launcher/ is installed and set as Home.
+# Saved Wi-Fi belongs to android.uid.system, not setupwraith, so disabling it keeps Wi-Fi.
+com.google.android.tungsten.setupwraith

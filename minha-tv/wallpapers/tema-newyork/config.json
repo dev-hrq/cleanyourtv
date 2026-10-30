@@ -1,0 +1,17 @@
+{
+  "wallpaper": true,
+  "wallpaper_rotation_minutes": 30,
+  "wallpaper_order": "shuffle",
+  "wallpaper_dim": 35,
+  "wallpaper_captions": true,
+  "dock_opacity": 70,
+  "greeting_name": "PH",
+  "cinematic_home": true,
+  "cinematic_art": 30,
+  "cinematic_scrim": 60,
+  "sky_intensity": 30,
+  "clock_wallpaper": true,
+  "clock_wallpaper_dim": 50,
+  "tile_menu": true,
+  "app_library": true
+}
