@@ -13,5 +13,7 @@
   "clock_wallpaper": true,
   "clock_wallpaper_dim": 50,
   "tile_menu": true,
-  "app_library": true
+  "app_library": true,
+  "clock_format": "24",
+  "back_opens_clock": true
 }
