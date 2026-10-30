@@ -245,3 +245,41 @@ TV_HOST=<tv ip>:5555 tools/venv/Scripts/python tools/tv.py "settings put global 
 
 Para desfazer: `settings put global private_dns_mode opportunistic`. Se o roteador já filtra DNS (Pi-hole,
 AdGuard Home), não use: o DNS Privado passa por cima do filtro do roteador.
+
+## Manter a TV atualizada com o projeto
+
+Sempre que o repositório original (Gathin23/cleanyourtv) tiver novidades, faça isto no **Git Bash**, na pasta
+`cleanyourtv`, com a depuração da TV ligada:
+
+1. Guarde a latitude e a longitude locais, que ficam fora do commit:
+   ```
+   git stash push -m latlong-local launcher/app/src/main/res/values/config.xml
+   ```
+2. Traga o original e reaplique o seu commit por cima:
+   ```
+   git fetch origin main
+   git rebase origin/main
+   ```
+   Se aparecer conflito, pare e peça ajuda: `git rebase --abort` volta tudo como estava.
+3. Envie para o seu GitHub (a branch local fica igual à remota):
+   ```
+   git push --force-with-lease fork minha-tv-tcl-65c6k
+   ```
+4. Devolva a latitude e a longitude:
+   ```
+   git stash pop
+   ```
+5. Recompile e instale o launcher na TV, sempre com o serviço dos botões:
+   ```
+   cd launcher
+   TV_HOST=<tv ip>:5555 INPUT_KEY_SERVICE=1 \
+     JAVA_HOME="<pasta do JDK 17>" ANDROID_HOME="%LOCALAPPDATA%/Android/Sdk" \
+     ./build-and-install.sh
+   cd ..
+   ```
+   No fim ele deve dizer `InputKeyService enabled` e `Installed`. As configurações (dock, botões, tema de New York)
+   continuam: elas vêm do `config.xml` e do tema que já está na TV.
+6. Aperte Home no controle e confira a tela inicial e os botões do controle.
+7. **Desligue a depuração** de novo: Depuração USB e depuração pela rede desligadas, e reinicie a TV.
+
+Para ver o que mudou antes de atualizar: `git log --oneline HEAD..origin/main` depois do `git fetch`.
