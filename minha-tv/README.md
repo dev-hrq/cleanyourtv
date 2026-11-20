@@ -4,7 +4,8 @@
 
 # TV da sala: TCL 65C6K (Google TV)
 
-Este arquivo registra a limpeza feita em **25/10/2026**, o que mudou, o que ficou como estava e como desfazer.
+Este arquivo registra a limpeza feita em **25/10/2026** e tudo o que veio depois: o que mudou, o que ficou como
+estava e como desfazer.
 Ele fica na pasta `work/`, que o git ignora, junto com o backup (`backup/`) e os prints (`shots/`). Nada
 disso vai para o repositório público.
 
@@ -18,6 +19,24 @@ disso vai para o repositório público.
 | Firmware | `G15-user 14 UTT2.250416.001 AU12` |
 | Rede | Wi-Fi, IP `<tv ip>` |
 | Lista parecida no repositório | `examples/tcl-65c7k-google-tv` (C7K brasileira, mesmo firmware, placa G08) |
+
+## Linha do tempo
+
+| Quando | O que foi feito |
+|---|---|
+| 25/10/2026 | Backup do estado da TV em `backup/` |
+| 25/10/2026 | 30 pacotes desativados em 6 lotes, com print entre eles. TCL Channel, os canais dele e o login da Netflix foram religados depois: ficaram 27 |
+| 25/10/2026 | Launcher do repositório instalado como tela inicial. O assistente `setupwraith` também disputava a tela inicial e foi desativado |
+| 25/10/2026 | Botões do controle mapeados: YouTube, Prime, Netflix, Disney+ e engrenagem pelo launcher; TCL Channel e Globoplay pelo firmware |
+| 25/10/2026 | Teste do volume segurado. A escolha foi manter os botões, com o volume subindo um passo por toque |
+| 25/10/2026 | ADB fechado e conferido com `adb-closed.py`. Depois foi religado para as mudanças seguintes |
+| 30/10/2026 | Coleção de 14 fotos de New York (Unsplash) como tema, trocando a cada 30 minutos. Guia em `wallpapers/README-WALLPAPER.md` |
+| 30/10/2026 | Opções da tela inicial: saudação "PH", faixa de cinema, céu com a hora do dia, relógio sobre a foto, menu dos blocos e Biblioteca de apps. Protetor de tela: o relógio do launcher |
+| 30/10/2026 | Add-ons: o Sources ficou. O Weather foi instalado e removido |
+| 30/10/2026 | Backlog com dois itens para depois: volume segurado com os botões, e recomendações de filmes ([`BACKLOG.md`](BACKLOG.md)) |
+| 30/10/2026 | Publicação no GitHub, sem dados pessoais, no fork `dev-hrq/cleanyourtv`, branch `minha-tv-tcl-65c6k` (veja abaixo) |
+| 30/10/2026 | Branch atualizada com 1702 commits do projeto original; launcher recompilado e reinstalado com o código novo |
+| 30/10/2026 | Tema reenviado com `clock_format: "24"` (relógio sempre em 24 h) e `back_opens_clock` (Voltar na tela inicial abre o relógio) |
 
 ## O que foi feito
 
@@ -73,6 +92,9 @@ disso vai para o repositório público.
 - Opções da tela inicial, no `config.json` do tema de New York (30/10/2026): saudação "BOA TARDE, PH", faixa de
   cinema (arte 30%, fundo 60%), céu com a hora do dia (intensidade 30), relógio do protetor de tela sobre a foto
   (50%), menu dos blocos (segurar OK) e Biblioteca de apps.
+- Desde a atualização de 30/10: relógio sempre em 24 h (`clock_format`) e **Voltar na tela inicial abre o relógio**
+  sobre uma foto de NY (`back_opens_clock`). Qualquer botão volta para a tela inicial. O protetor de tela também
+  passou a usar as fotos da coleção.
 - O céu segue o sol da cidade da TV: `latitude` e `longitude` da cidade no `config.xml`, arredondadas (só no PC; vazias na versão publicada).
 - Protetor de tela da TV: o **Clock** do launcher (`com.gathin.tvhome/.ClockDream`). Para voltar ao do Google TV,
   escolha outro em Configurações → Sistema → Protetor de tela.
@@ -129,6 +151,10 @@ TV_HOST=<tv ip>:5555 tools/venv/Scripts/python tools/tv.py "settings put secure 
 Pela TV, sem computador: **Configurações → Sistema → Acessibilidade**, serviço "Início". Globoplay e TCL
 Channel abrem pelo firmware e funcionam nos dois casos.
 
+Desde a atualização de 30/10, com o serviço desligado, o launcher ainda atende **Prime, Netflix e Disney+**
+(códigos 1000 ou mais), mas só com a tela inicial aberta. YouTube e engrenagem devem parar. Isso veio da leitura do
+código e não foi testado nesta TV; está no [`BACKLOG.md`](BACKLOG.md).
+
 ### Usar a Netflix ou o Disney+ sem o computador
 
 1. Abra a **Play Store** na TV, procure o app e aperte **Ativar**. Outro caminho: **Configurações → Apps → Ver todos
@@ -139,9 +165,10 @@ Channel abrem pelo firmware e funcionam nos dois casos.
 
 O `check.py --fix` desativa de novo tudo o que está na lista, inclusive a Netflix e o Disney+ se estiverem ativados.
 
-## Fechar o ADB (falta fazer)
+## Fechar o ADB
 
-A porta 5555 da TV aceita comandos sem criptografia enquanto a depuração estiver ligada. Para fechar:
+Foi fechado e conferido em 25/10, e religado depois para as mudanças seguintes. **Neste momento a depuração está
+ligada**: feche quando terminar. A porta 5555 da TV aceita comandos sem criptografia enquanto a depuração estiver ligada. Para fechar:
 
 1. Na TV: **Configurações → Sistema → Opções do desenvolvedor**. Revogue as autorizações de depuração USB e
    desligue a **Depuração USB** e a depuração pela rede, ou a **Depuração sem fio**, se aparecer.
@@ -232,6 +259,18 @@ Para desativar de novo o que voltou, troque `check.py` por `check.py --fix` no m
 | `shots/` | Prints da TV antes, entre os lotes e com o launcher novo |
 | `%USERPROFILE%\.cleanyourtv\` | Registros de recuperação gravados pelos scripts |
 | `%LOCALAPPDATA%\Android\Sdk` | Android SDK usado para compilar o launcher (pode apagar se não for mais compilar) |
+
+## Publicação no GitHub
+
+- Repositório: **<https://github.com/dev-hrq/cleanyourtv>**, um fork público de `Gathin23/cleanyourtv`, na branch
+  **`minha-tv-tcl-65c6k`**. Login do `gh` com a conta `dev-hrq`.
+- O que vai para lá: o `config.xml` do launcher (dock e botões) e a pasta `minha-tv/`, com cópias destes guias sem
+  IP, nome do Wi-Fi, caminhos do PC nem localização.
+- O que nunca vai: `backup/`, `shots/`, `work/`, `tools/adbkey/` e as fotos de New York.
+- A latitude e a longitude ficam só no PC, como mudança fora do commit do `config.xml`. No GitHub elas estão vazias.
+- No git local, `origin` é o projeto original e `fork` é o seu. Nada foi enviado como pull request ao projeto original.
+- Ao mudar um destes guias, atualize também a cópia em `minha-tv/`, sem os dados pessoais, faça o commit e rode
+  `git push`.
 
 ## Opcional: DNS com bloqueio de anúncios
 
